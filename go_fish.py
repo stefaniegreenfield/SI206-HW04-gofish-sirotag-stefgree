@@ -141,3 +141,25 @@ while True:
 			print("It's a tie.")
 		print("Player 1: {}.  Player 2: {}.".format(hands[0].score, hands[1].score))
 		break
+
+	print("P1")
+	for card in hands[0].cards:
+		print(card)
+
+	print()
+
+	print("P2")
+	for card in hands[1].cards:
+		print(card)
+
+
+	number= input('Player {}: Please choose a card rank you would like to ask the other player if they have (between 1-13): '.format(current_player))
+	while not number.isdigit() or int(number) > 13 or int(number) < 1:
+		print("Please choose a valid number between 1 and 13!!")
+		number= input('Player {}: Please choose a card rank you would like to ask the other player if they have (between 1-13): '.format(current_player))
+
+	# Only enforce asking for rank in hand if cards in hand
+	if len(hands[current_player-1].cards) > 0:
+		while int(number) not in [card.rank for card in hands[current_player-1].cards]:
+			print("Please choose a card in your hand!!")
+			number= input('Player {}: Please choose a card rank you would like to ask the other player if they have (between 1-13): '.format(current_player))
