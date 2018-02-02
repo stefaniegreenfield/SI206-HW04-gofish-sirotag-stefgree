@@ -163,3 +163,33 @@ while True:
 		while int(number) not in [card.rank for card in hands[current_player-1].cards]:
 			print("Please choose a card in your hand!!")
 			number= input('Player {}: Please choose a card rank you would like to ask the other player if they have (between 1-13): '.format(current_player))
+
+	cards_to_move = []
+	being_asked = None
+	if current_player == 1:
+		being_asked = 1
+	else:
+		being_asked = 0
+	for suit in range(4):
+		test_card = Card(suit, int(number))
+		remove_card = hands[being_asked].remove_card(test_card)
+		if remove_card:
+			cards_to_move.append(remove_card)
+
+	if cards_to_move == []:
+		print("\nGO FISH!!\n")
+		draw = deck.pop_card()
+		hands[current_player-1].add_card(draw)
+		if draw.rank == int(number):
+			print("You drew the rank you asked for.  Go again!\n")
+			continue
+	else:
+		for each_card in cards_to_move:
+			hands[current_player-1].add_card(each_card)
+
+
+
+	if current_player == 1:
+		current_player = 2
+	else:
+		current_player = 1
