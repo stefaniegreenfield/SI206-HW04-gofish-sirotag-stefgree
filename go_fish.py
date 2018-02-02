@@ -110,3 +110,34 @@ class Hand():
 			if pair_present == 1:
 				non_paired_cards.append(lst[0])
 		self.cards = non_paired_cards
+
+deck=Deck()
+deck.shuffle()
+hands = deck.deal(2,7)
+current_player=1
+while True:
+
+	for hand in hands:
+		card_count = {}
+		for card in hand.cards:
+			if card.rank in card_count:
+				card_count[card.rank] += 1
+			else:
+				card_count[card.rank] = 1
+		for rank, freq in card_count.items():
+			if freq == 4:
+				for suit in range(4):
+					hand.remove_card(Card(suit, rank))
+				hand.score += 1
+
+	# Check if game over
+	if len(deck.cards) == 0 and len(hands[0].cards) == 0 and len(hands[1].cards) == 0:
+		print("\n\nGame over!\n\n")
+		if hands[0].score > hands[1].score:
+			print("Player 1 wins.")
+		elif hands[0].score < hands[1].score:
+			print("Player 2 wins.")
+		else:
+			print("It's a tie.")
+		print("Player 1: {}.  Player 2: {}.".format(hands[0].score, hands[1].score))
+		break
